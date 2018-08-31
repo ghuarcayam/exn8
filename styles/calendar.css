@@ -1,0 +1,35 @@
+table.calendar {
+  text-align: center;
+  font-size: 12px;
+}
+
+table.calendar tbody tr td {
+  padding: 5px 5px 5px 5px;
+  width: 15px;
+  height: 15px;
+}
+
+table.calendar thead tr td.dayname {
+  background-color: #ffffff;
+}
+
+table.calendar thead th td.monthname {
+  background-color: #008000;
+}
+
+table.calendar tbody tr td.weekendday,
+table tbody tr td.weekendday {
+  background-color: #ffff00;
+}
+
+table.calendar tbody tr td {
+  background-color: #808080;
+}
+
+table.calendar tbody tr td.commonday {
+  background-color: #008000;
+}
+
+table.calendar tbody tr td.holiday {
+  background-color: red !important;
+}
