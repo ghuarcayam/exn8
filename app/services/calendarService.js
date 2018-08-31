@@ -1,5 +1,5 @@
 (function($root, ng, _) {
-  ng.module("number8.calendar", [])
+  ng.module("number8.calendar")
     .factory('calendarService', ['$http', '$q', '$cacheFactory', function($http, $q, $cacheFactory) {
       var cache = $cacheFactory('cacheHoliday');
 
@@ -35,7 +35,7 @@
         var sdate = new Date(startDate.valueOf());
         var endDate = new Date(sdate.valueOf());
         endDate.setDate(sdate.getDate() + (countDays || 0));
-        var cm = ((endDate.getFullYear() - sdate.getFullYear()) * 12) - (sdate.getMonth()) + (endDate.getMonth());
+        var cm = ((endDate.getFullYear() - sdate.getFullYear()) * 12) - (sdate.getMonth() + 1) + (endDate.getMonth() + 2);
         for (var index = 0; index < cm; index++) {
           var nm = new Date(sdate.valueOf());
           nm.setMonth(sdate.getMonth() + index);
@@ -52,9 +52,28 @@
         months[months.length - 1].countDays = endDate.getDate();
         return months;
       }
-      
-      
+      function generateWithHolydays(startDate, countDays, country){
+        var defer = $q.defer();
+        if (!country) defer.resolve(generate(startDate, countDays, [])) ;
+        else{
+          calendarService.getFromCache(country).then(function(data){
+            defer.resolve(generate(startDate, countDays, data)) ;
+          }, function()
+          {
+            defer.resolve(generate(startDate, countDays, [])) ;
+          });
+        }
+        
+        return defer.promise;
+      }
+      function rxGenerate(p){
+        return rx.Observable
+              .fromPromise(generateWithHolydays(p.startDate, p.countDays, p.country))
+              .map(function(d){return d});
+      }
 
       this.generate = generate;
-      }]);
+      this.rxGenerate = rxGenerate;
+      this.generateWithHolydays = generateWithHolydays;
+    }]);
 })(window, angular, _);

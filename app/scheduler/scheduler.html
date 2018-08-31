@@ -1,0 +1,8 @@
+<div class="mdc-layout-grid">
+    <div class="mdc-layout-grid__inner">
+        <div ng-repeat="month in $ctrl.months" class="mdc-layout-grid__cell">
+                <number8-calendar  start-date="month.startDate" count-days="month.countDays" holidays="month.holidays">
+                    </number8-calendar>
+        </div>
+    </div>
+</div>

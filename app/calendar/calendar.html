@@ -1,0 +1,27 @@
+<table class="calendar">
+  <thead>
+    <tr>
+      <td>S</td>
+      <td>M</td>
+      <td>T</td>
+      <td>W</td>
+      <td>T</td>
+      <td>F</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <td colspan="7" class="monthname">
+        {{$ctrl.startDate | date:'MMMM yyyy'}}
+      </td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="week in $ctrl.weeks">
+      <td ng-repeat="day in week" ng-class="{weekendday: (day.day==6 || day.day==0) && !day.isEmpty, 
+                                             commonday:  day.day!==6 && day.day!==0 && !day.isEmpty,
+                                             holiday:day.isHolydate}">
+        <span>{{day.dayNumber}}</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
